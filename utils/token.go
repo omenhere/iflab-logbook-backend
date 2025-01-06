@@ -67,7 +67,7 @@ func SetTokenCookie(c *gin.Context, token string) {
         Path:     "/",
         Expires:  time.Now().Add(24 * time.Hour),
         HttpOnly: true,
-        SameSite: http.SameSiteLaxMode,
+        SameSite: http.SameSiteNoneMode,
         Secure:   true, // Change to true in production
     }
     http.SetCookie(c.Writer, cookie)
