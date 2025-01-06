@@ -9,7 +9,6 @@ import (
 )
 
 type Logbook struct {
-	ID        string `json:"id"`
 	UserID    string `json:"user_id"`
 	StartDate string `json:"start_date" binding:"required"` // Start Date
 	EndDate   string `json:"end_date" binding:"required"`   // End Date
