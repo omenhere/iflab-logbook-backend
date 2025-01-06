@@ -128,7 +128,7 @@ func Logout(c *gin.Context) {
         Path:     "/",
         Expires:  time.Now().Add(-time.Hour), // Expire the cookie
         HttpOnly: true,
-        SameSite: http.SameSiteNoneMode, 
+        SameSite: http.SameSiteStrictMode,
         Secure:   false, // Change to true in production
     }
     http.SetCookie(c.Writer, cookie)

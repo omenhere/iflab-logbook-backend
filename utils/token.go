@@ -59,7 +59,6 @@ func ParseToken(tokenString string) (string, error) {
 }
 
 
-// SetTokenCookie sets the JWT token in an HTTP-only cookie
 func SetTokenCookie(c *gin.Context, token string) {
     cookie := &http.Cookie{
         Name:     "jwt",
@@ -68,7 +67,7 @@ func SetTokenCookie(c *gin.Context, token string) {
         Expires:  time.Now().Add(24 * time.Hour),
         HttpOnly: true,
         SameSite: http.SameSiteNoneMode,
-        Secure:   true, // Change to true in production
+        Secure:   true, 
     }
     http.SetCookie(c.Writer, cookie)
 }
