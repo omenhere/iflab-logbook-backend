@@ -16,6 +16,7 @@ type Logbook struct {
 	Activity  string `json:"activity" binding:"required"`   // Activity
 	PIC       string `json:"pic" binding:"required"`        // Person In Charge
 	Status    string `json:"status" `     // Status: approve, pending, reject
+    SupportingEvidence string `json:"supporting_evidence"` 
 }
 
 // GetLogbooks retrieves logbooks for the authenticated user
