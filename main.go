@@ -18,7 +18,7 @@ func main() {
 	r := gin.Default()
 
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"https://iflab-logbook-4hw8lpmwp-raihan-abdurrahmans-projects.vercel.app"}, // Pastikan ini sesuai dengan origin frontend Anda
+		AllowOrigins:     []string{"https://iflab-logbook.vercel.app"}, // Pastikan ini sesuai dengan origin frontend Anda
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		AllowCredentials: true, // Izinkan cookie atau kredensial
