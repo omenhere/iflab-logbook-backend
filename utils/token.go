@@ -21,9 +21,11 @@ type Claims struct {
 
 // GenerateToken creates a JWT token for a given user ID
 func GenerateToken(userID string) (string, error) {
-    claims := jwt.MapClaims{
-        "id":  userID,
-        "exp": time.Now().Add(24 * time.Hour).Unix(),
+    claims := Claims{
+        ID: userID,
+        RegisteredClaims: jwt.RegisteredClaims{
+            ExpiresAt: jwt.NewNumericDate(time.Now().Add(24 * time.Hour)),
+        },
     }
     token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
     return token.SignedString(jwtSecret)
@@ -66,7 +68,7 @@ func SetTokenCookie(c *gin.Context, token string) {
         Expires:  time.Now().Add(24 * time.Hour),
         HttpOnly: true,
         SameSite: http.SameSiteStrictMode,
-        Secure:   false, // Change to true in production
+        Secure:   true, // Change to true in production
     }
     http.SetCookie(c.Writer, cookie)
 }
