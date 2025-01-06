@@ -67,7 +67,7 @@ func Register(c *gin.Context) {
 func Login(c *gin.Context) {
     var input LoginInput
     if err := c.ShouldBindJSON(&input); err != nil {
-        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input", "details": err.Error()})
         return
     }
 
@@ -76,6 +76,7 @@ func Login(c *gin.Context) {
         Select("*").
         Eq("nim", input.Nim).
         Execute(&users)
+
     if err != nil || len(users) == 0 {
         c.JSON(http.StatusUnauthorized, gin.H{"error": "NIM not found"})
         return
@@ -93,6 +94,8 @@ func Login(c *gin.Context) {
     }
 
     userID, ok := users[0]["id"].(string)
+    userName, _ := users[0]["name"].(string) // Ambil nama jika ada
+    userNim, _ := users[0]["nim"].(string)  // Ambil nim jika ada
     if !ok {
         c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve user ID"})
         return
@@ -106,8 +109,16 @@ func Login(c *gin.Context) {
 
     utils.SetTokenCookie(c, token)
 
-    c.JSON(http.StatusOK, gin.H{"message": "Login successful"})
+    c.JSON(http.StatusOK, gin.H{
+        "message": "Login successful",
+        "user": gin.H{
+            "id":   userID,
+            "name": userName,
+            "nim":  userNim,
+        },
+    })
 }
+
 
 // Logout handles user logout by clearing the JWT cookie
 func Logout(c *gin.Context) {
