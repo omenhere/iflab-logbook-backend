@@ -16,6 +16,7 @@ func main() {
 
 	// Set up Gin router
 	r := gin.Default()
+	r.RedirectTrailingSlash = false
 
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"https://iflab-logbook.vercel.app"}, // Pastikan ini sesuai dengan origin frontend Anda
@@ -46,8 +47,10 @@ func main() {
 	protected := r.Group("/logbooks")
 	protected.Use(middleware.AuthMiddleware())
 	{
-		protected.GET("/", controllers.GetLogbooks)   // Get logbook by user
-		protected.POST("/", controllers.AddLogbook)  // Add new logbook
+		protected.GET("/", controllers.GetLogbooks)  
+		protected.POST("/", controllers.AddLogbook)  
+		protected.PUT("update/:id", controllers.UpdateLogbook)    
+        protected.DELETE("/:id", controllers.DeleteLogbook) 
 	}
 
 	// Start server
