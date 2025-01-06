@@ -25,7 +25,7 @@ func GetLogbooks(c *gin.Context) {
 	var logbooks []Logbook
 
 	err := utils.SupabaseClient.DB.From("logbooks").
-		Select("id,user_id,start_date,end_date,activity,pic,status"). // Tambahkan `id` di sini
+		Select("id,user_id,start_date,end_date,activity,pic,status,supporting_evidence"). // Tambahkan `id` di sini
 		Eq("user_id", userID).
 		Execute(&logbooks)
 
